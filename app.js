@@ -23,6 +23,8 @@ async function sendMessage() {
         botResponse = "আমার নাম Shawon 2.0।";
     } else if (userInput.includes("আবহাওয়া")) {
         botResponse = "আজকের আবহাওয়া সুন্দর!";
+    } else if (userInput.includes("বাংলাদেশ")) {
+        botResponse = "বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর দেশ।";
     } else {
         // If the question is unknown, search Google
         botResponse = await fetchGoogleSearch(userInput);
@@ -52,9 +54,16 @@ async function fetchGoogleSearch(query) {
     try {
         const response = await fetch(url);
         const data = await response.json();
+
+        // Log the full JSON response to Console for debugging
+        console.log("Full JSON Response:", data);
+
         if (data.items && data.items.length > 0) {
+            // Log the first search result
+            console.log("First Search Result:", data.items[0].snippet);
             return data.items[0].snippet; // Return the first search result
         } else {
+            console.warn("No search results found.");
             return "দুঃখিত, আমি কোনো উত্তর খুঁজে পাইনি।";
         }
     } catch (error) {
